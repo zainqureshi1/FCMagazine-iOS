@@ -24,17 +24,16 @@ class MainViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifierLatest)
-        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifierMagazine)
-
+        
         patternedImageColor = UIColor(patternImage: UIImage(named: "Tile")!)
         
         self.loadMagazineSections()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let delegate = UIApplication.shared.delegate as? AppDelegate {
+            delegate.lockOrientation(.portrait, andRotateTo: .portrait)
+        }
     }
     
     func loadMagazineSections() {
@@ -44,6 +43,7 @@ class MainViewController: UICollectionViewController {
         
         var recentMagazines = [Magazine]()
         recentMagazines.append(Magazine("JAN 2017", withCover: UIImage(named: "MagazineCover1")!, "Issue39", andPageCount: 56))
+        recentMagazines.append(Magazine("DEC 2016", withCover: UIImage(named: "MagazineCover2")!, "Issue38", andPageCount: 54))
         sections.append(Section("RECENT ISSUES", withItemsPerRow: 2, andMagazines: recentMagazines))
         
         adjustSectionsSize()
@@ -66,16 +66,8 @@ class MainViewController: UICollectionViewController {
         return sections[indexPath.section].magazines[indexPath.row]
     }
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueIdentifierReader {
             let readerViewController = segue.destination as! ReaderViewController

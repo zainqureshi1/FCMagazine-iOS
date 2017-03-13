@@ -6,7 +6,6 @@ target 'FCMagazine' do
   use_frameworks!
 
   # Pods for FCMagazine
-  pod 'DJKFlipper'
 
   target 'FCMagazineTests' do
     inherit! :search_paths
