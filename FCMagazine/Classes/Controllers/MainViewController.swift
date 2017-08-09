@@ -8,26 +8,28 @@
 
 import UIKit
 
-private let reuseIdentifierLatest = "LatestCoverCell"
 private let reuseIdentifierMagazine = "MagazineCoverCell"
-private let reuseIdentifierHeader = "SectionHeader"
-private let latestCoverPerRow: CGFloat = 1
-private let magazineCoverPerRow: CGFloat = 2
 private let sectionInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 20.0, right: 0.0)
 private let segueIdentifierReader = "ReaderSegue"
 
-class MainViewController: UICollectionViewController {
+class MainViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, MagazineDeleteDelegate {
     
     // MARK: - Properties
-    var sections = [Section]()
-    var patternedImageColor: UIColor!
+    var magazines = [Magazine]()
+    let dateFormatter = DateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        patternedImageColor = UIColor(patternImage: UIImage(named: "Tile")!)
+        self.navigationController?.navigationBar.backgroundColor = UIColor.gray
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+        self.navigationItem.title = "Fashion & LifeStyle Monthly Magazine"
+        let rightButtonItem = UIBarButtonItem.init(image: UIImage(named: "Icon Menu"), style: .plain, target: self, action: #selector(showMenu))
+        self.navigationItem.rightBarButtonItem = rightButtonItem
         
-        self.loadMagazineSections()
+        dateFormatter.dateFormat = "MMM yyyy"
+        
+        self.loadMagazineCovers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,161 +38,187 @@ class MainViewController: UICollectionViewController {
         }
     }
     
-    func loadMagazineSections() {
-        var latestMagazines = [Magazine]()
-        latestMagazines.append(Magazine("Latest Issue FEB 2017", withCover: UIImage(named: "LatestIssueCover")!, "Issue40", andPageCount: 58))
-        sections.append(Section("LATEST ISSUE", withItemsPerRow: 1, andMagazines: latestMagazines))
-        
-        var recentMagazines = [Magazine]()
-        recentMagazines.append(Magazine("JAN 2017", withCover: UIImage(named: "MagazineCover1")!, "Issue39", andPageCount: 56))
-        recentMagazines.append(Magazine("DEC 2016", withCover: UIImage(named: "MagazineCover2")!, "Issue38", andPageCount: 54))
-        sections.append(Section("RECENT ISSUES", withItemsPerRow: 2, andMagazines: recentMagazines))
-        
-        adjustSectionsSize()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func showMenu() {
+        Utility.showActionSheet(viewController: self, sourceView: nil, title: nil, message: nil, actionTitle: "Subscribe", handler: {_ in
+            
+        })
     }
     
-    func adjustSectionsSize() {
-        for section in sections {
-            while section.magazines.count % section.itemsPerRow != 0 {
-                section.magazines.append(Magazine(isFiller: true))
+    func loadMagazineCovers() {
+        let coverPageUrls = DropboxManager.getInstance().loadCoverPages()
+        if coverPageUrls.count > 0 {
+            magazines.removeAll()
+            for url in coverPageUrls {
+                addCoverPage(url, checkExisting: false, refreshView: false)
+            }
+            refreshCollectionView(true)
+        }
+        
+        let loadedCoversFromStorage = magazines.count > 0
+        DropboxManager.getInstance().downloadCoverPages(doDownload: {entries in
+            if entries.count == self.magazines.count {
+                var missingCovers = false
+                for entry in entries {
+                    var hasCover = false
+                    for magazine in self.magazines {
+                        if magazine.name == entry.name {
+                            hasCover = true
+                            break
+                        }
+                    }
+                    if hasCover == false {
+                        missingCovers = true
+                        break
+                    }
+                }
+                return missingCovers
+            }
+            return true
+        }, recursiveSuccess: {fileMeta, url in
+            self.addCoverPage(url, checkExisting: loadedCoversFromStorage, refreshView: true)
+        }, completion: {url in
+            
+        }, failure: {error in
+            if self.magazines.count == 0 {
+                Utility.showAlert(viewController: self, title: "Loading Error", message: error)
+            }
+        })
+    }
+    
+    func addCoverPage(_ url: URL, checkExisting: Bool, refreshView: Bool) {
+        let name = url.deletingPathExtension().lastPathComponent
+        if let image = UIImage(contentsOfFile: url.path), let date = dateFormatter.date(from: name) {
+            if checkExisting {
+                for magazine in magazines {
+                    if magazine.name == name {
+                        magazine.coverImage = image;
+                        refreshCollectionItem(magazine)
+                        return
+                    }
+                }
+            }
+            let magazine = Magazine(name, image, date)
+            magazines.append(magazine)
+            refreshCollectionView(true)
+            checkMagazine(magazine, refreshView: refreshView)
+        }
+    }
+    
+    func checkMagazine(_ magazine: Magazine, refreshView: Bool) {
+        let fileUrls = DropboxManager.getInstance().loadMagazine(name: magazine.name)
+        if fileUrls.count > 0 {
+            magazine.downloaded = true
+            magazine.fileUrls = fileUrls
+            if refreshView {
+                refreshCollectionItem(magazine)
+            }
+            
+            DropboxManager.getInstance().getMagazineMeta(name: magazine.name, success: {entries in
+                if magazine.fileUrls?.count != entries.count {
+                    magazine.downloaded = false
+                    self.refreshCollectionItem(magazine)
+                }
+            }, failure: {error in
+            })
+        } else if magazine.downloaded {
+            magazine.downloaded = false
+            magazine.fileUrls = nil
+            if refreshView {
+                refreshCollectionItem(magazine)
             }
         }
     }
     
-    func magazine(for indexPath: IndexPath) -> Magazine {
-        return sections[indexPath.section].magazines[indexPath.row]
+    func refreshCollectionView(_ sort: Bool) {
+        if sort {
+            magazines.sort(by: { $0.date.compare($1.date) == .orderedDescending })
+        }
+        self.collectionView?.reloadData()
     }
-
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == segueIdentifierReader {
-            let readerViewController = segue.destination as! ReaderViewController
-            let indexPath = sender as! IndexPath
-            readerViewController.magazineItem = sections[indexPath.section].magazines[indexPath.row]
+    
+    func refreshCollectionItem(_ magazine: Magazine) {
+        let loadedItems = self.collectionView?.numberOfItems(inSection: 0)
+        for i in 0..<min(magazines.count, loadedItems!) {
+            if magazines[i].name == magazine.name {
+                self.collectionView?.reloadItems(at: [IndexPath(row: i, section:0)])
+                return
+            }
         }
     }
     
+    func downloadMagazine(_ magazine: Magazine) {
+        DropboxManager.getInstance().downloadMagazine(name: magazine.name, progress: {total, downloaded in
+            magazine.downloading = true
+            magazine.totalPages = total
+            magazine.downloadedPages = downloaded
+            self.refreshCollectionItem(magazine)
+        }, completion: {url in
+            magazine.downloading = false
+            self.checkMagazine(magazine, refreshView: true)
+        }, failure: {error in
+            magazine.downloading = false
+            self.checkMagazine(magazine, refreshView: true)
+            Utility.showAlert(viewController: self, title: "Downloading Error", message: error)
+         })
+    }
+
     // MARK: UICollectionViewDataSource
-
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
+        return 1
     }
-
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sections[section].magazines.count
+        return magazines.count
     }
-    
-    override func collectionView(_ collectionView: UICollectionView,
-                                 viewForSupplementaryElementOfKind kind: String,
-                                 at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case UICollectionElementKindSectionHeader:
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                             withReuseIdentifier: reuseIdentifierHeader,
-                                                                             for: indexPath) as! SectionHeaderView
-            headerView.backgroundColor = patternedImageColor
-            headerView.labelHeader.text = sections[indexPath.section].heading
-            return headerView
-        default:
-            assert(false, "Unexpected element kind")
-        }
-    }
-    
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let reuseIdentifier = indexPath.section == 0 ? reuseIdentifierLatest : reuseIdentifierMagazine
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MagazineCoverCell
-        let magazine = self.magazine(for: indexPath)
-        
-        cell.backgroundColor = patternedImageColor
-        if magazine.filler {
-            cell.imageViewCover.isHidden = true
-            cell.labelName.isHidden = true
-        } else {
-            cell.imageViewCover.image = magazine.cover
-            cell.labelName.text = magazine.name
-        
-            if indexPath.section == 0 {
-                cell.labelName.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/10)
-            }
-        }
-    
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifierMagazine, for: indexPath) as! MagazineCoverCell
+        cell.setCover(self.magazines[indexPath.row], downloadHandler: {magazine in
+            self.downloadMagazine(magazine)
+        })
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if !magazine(for: indexPath).filler {
+        let magazine = self.magazines[indexPath.row]
+        if magazine.downloaded {
             performSegue(withIdentifier: segueIdentifierReader, sender: indexPath)
+        } else if magazine.downloading {
+            Utility.showAlert(viewController: self, title: magazine.name, message: "Please wait while this magazine is downloading")
+        } else {
+            Utility.showMultiActionAlert(viewController: self, title: magazine.name, message: "Do you want to download this magazine?", actionTitles: ["Start Download", "Not Yet"], handlers: [{action in
+                    self.downloadMagazine(magazine)
+                }])
         }
     }
     
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+        let horizontalMargin = flowLayout.sectionInset.left + flowLayout.sectionInset.right
+        let viewWidth = collectionView.bounds.width - horizontalMargin
+        let imageSize = magazines[indexPath.row].coverImage.size
+        let pictureHeight:CGFloat = viewWidth * (imageSize.height / imageSize.width)
+        let textHeightAndMargin:CGFloat = 42
+        let cellHeight:CGFloat = pictureHeight + textHeightAndMargin
+        return CGSize(width: viewWidth, height: cellHeight)
     }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
-    }
-    */
+    // MARK: - Navigation
     
-}
-
-extension MainViewController : UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.section == 0 {
-            let paddingSpace = sectionInsets.left * (latestCoverPerRow + 1)
-            let availableWidth = view.frame.width - paddingSpace
-            let widthPerItem = availableWidth / latestCoverPerRow
-            return CGSize(width: widthPerItem, height: widthPerItem*0.7)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == segueIdentifierReader {
+            let readerViewController = segue.destination as! ReaderViewController
+            let indexPath = sender as! IndexPath
+            readerViewController.deleteDelegate = self
+            readerViewController.magazineItem = magazines[indexPath.row]
         }
-        
-        let paddingSpace = sectionInsets.left * (magazineCoverPerRow + 1)
-        let availableWidth = view.frame.width - paddingSpace
-        let widthPerItem = availableWidth / magazineCoverPerRow
-        return CGSize(width: widthPerItem, height: widthPerItem*1.48)
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInsets
-    }
+    // MARK: - Magazine Delete Delegate
     
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInsets.left
+    func deleted(magazine: Magazine) {
+        checkMagazine(magazine, refreshView: true)
     }
     
 }

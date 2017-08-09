@@ -16,16 +16,16 @@
 		18B466261E654F03007F5009 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B466251E654F03007F5009 /* AppDelegate.swift */; };
 		18B466291E654F0F007F5009 /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B466271E654F0F007F5009 /* ReaderViewController.swift */; };
 		18B4662E1E655068007F5009 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B4662D1E655068007F5009 /* MainViewController.swift */; };
-		18B466321E655B71007F5009 /* MagazineCoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B466311E655B71007F5009 /* MagazineCoverCell.swift */; };
-		18B466371E65627D007F5009 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B466361E65627D007F5009 /* Section.swift */; };
-		18B466391E6587A8007F5009 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B466381E6587A8007F5009 /* SectionHeaderView.swift */; };
 		18FD1F461E6409A400B999A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FD1F441E6409A400B999A9 /* Main.storyboard */; };
 		18FD1F481E6409A400B999A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18FD1F471E6409A400B999A9 /* Assets.xcassets */; };
 		18FD1F4B1E6409A400B999A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18FD1F491E6409A400B999A9 /* LaunchScreen.storyboard */; };
 		18FD1F561E6409A500B999A9 /* FCMagazineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD1F551E6409A500B999A9 /* FCMagazineTests.swift */; };
-		18FD1F611E6453BA00B999A9 /* Magazine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FD1F601E6453BA00B999A9 /* Magazine.swift */; };
 		1996048FE1565661843B045E /* Pods_FCMagazineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCF9BC2585CD48903DABB168 /* Pods_FCMagazineTests.framework */; };
 		96C743BC8F904422836C7DA0 /* Pods_FCMagazine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8044FC18BD564895C38A9362 /* Pods_FCMagazine.framework */; };
+		BF64E7B41F3999BB00C5EB44 /* Magazine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF64E7B31F3999BB00C5EB44 /* Magazine.swift */; };
+		BF64E7B71F39C25900C5EB44 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF64E7B61F39C25900C5EB44 /* Utility.swift */; };
+		BF64E7B91F39D59000C5EB44 /* MagazineCoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF64E7B81F39D59000C5EB44 /* MagazineCoverCell.swift */; };
+		BFDEAECA1F3889E700B75AAE /* DropboxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAEC91F3889E700B75AAE /* DropboxManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,9 +50,6 @@
 		18B466251E654F03007F5009 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Classes/AppDelegate.swift; sourceTree = "<group>"; };
 		18B466271E654F0F007F5009 /* ReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReaderViewController.swift; path = Classes/Controllers/ReaderViewController.swift; sourceTree = "<group>"; };
 		18B4662D1E655068007F5009 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Classes/Controllers/MainViewController.swift; sourceTree = "<group>"; };
-		18B466311E655B71007F5009 /* MagazineCoverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MagazineCoverCell.swift; path = Classes/Views/MagazineCoverCell.swift; sourceTree = "<group>"; };
-		18B466361E65627D007F5009 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Section.swift; path = Classes/Models/Section.swift; sourceTree = "<group>"; };
-		18B466381E6587A8007F5009 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SectionHeaderView.swift; path = Classes/Views/SectionHeaderView.swift; sourceTree = "<group>"; };
 		18FD1F3B1E6409A400B999A9 /* FCMagazine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FCMagazine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FD1F451E6409A400B999A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		18FD1F471E6409A400B999A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,11 +58,14 @@
 		18FD1F511E6409A500B999A9 /* FCMagazineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FCMagazineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18FD1F551E6409A500B999A9 /* FCMagazineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMagazineTests.swift; sourceTree = "<group>"; };
 		18FD1F571E6409A500B999A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		18FD1F601E6453BA00B999A9 /* Magazine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Magazine.swift; path = Classes/Models/Magazine.swift; sourceTree = "<group>"; };
 		20FF3F158EB527E2299FF48A /* Pods-FCMagazine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FCMagazine.release.xcconfig"; path = "Pods/Target Support Files/Pods-FCMagazine/Pods-FCMagazine.release.xcconfig"; sourceTree = "<group>"; };
 		8044FC18BD564895C38A9362 /* Pods_FCMagazine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FCMagazine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D34A699FCC5B0BF18793994 /* Pods-FCMagazine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FCMagazine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FCMagazine/Pods-FCMagazine.debug.xcconfig"; sourceTree = "<group>"; };
 		BE4D92EB009B2033F172F15E /* Pods-FCMagazineTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FCMagazineTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FCMagazineTests/Pods-FCMagazineTests.release.xcconfig"; sourceTree = "<group>"; };
+		BF64E7B31F3999BB00C5EB44 /* Magazine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Magazine.swift; path = Classes/Models/Magazine.swift; sourceTree = "<group>"; };
+		BF64E7B61F39C25900C5EB44 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = Classes/Utils/Utility.swift; sourceTree = "<group>"; };
+		BF64E7B81F39D59000C5EB44 /* MagazineCoverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MagazineCoverCell.swift; path = Classes/Views/MagazineCoverCell.swift; sourceTree = "<group>"; };
+		BFDEAEC91F3889E700B75AAE /* DropboxManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropboxManager.swift; path = Classes/Managers/DropboxManager.swift; sourceTree = "<group>"; };
 		FCF9BC2585CD48903DABB168 /* Pods_FCMagazineTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FCMagazineTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -115,8 +115,7 @@
 		18B466341E655BA8007F5009 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				18FD1F601E6453BA00B999A9 /* Magazine.swift */,
-				18B466361E65627D007F5009 /* Section.swift */,
+				BF64E7B31F3999BB00C5EB44 /* Magazine.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -124,8 +123,7 @@
 		18B466351E655BB5007F5009 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				18B466311E655B71007F5009 /* MagazineCoverCell.swift */,
-				18B466381E6587A8007F5009 /* SectionHeaderView.swift */,
+				BF64E7B81F39D59000C5EB44 /* MagazineCoverCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -162,10 +160,12 @@
 		18FD1F3D1E6409A400B999A9 /* FCMagazine */ = {
 			isa = PBXGroup;
 			children = (
-				182DF4781E68015000A2AF85 /* DJKFlipper */,
 				18B466331E655B93007F5009 /* Controllers */,
 				18B466351E655BB5007F5009 /* Views */,
+				182DF4781E68015000A2AF85 /* DJKFlipper */,
+				BFDEAEC81F3889B600B75AAE /* Managers */,
 				18B466341E655BA8007F5009 /* Models */,
+				BF64E7B51F39C21800C5EB44 /* Utils */,
 				18B466251E654F03007F5009 /* AppDelegate.swift */,
 				18FD1F441E6409A400B999A9 /* Main.storyboard */,
 				18FD1F471E6409A400B999A9 /* Assets.xcassets */,
@@ -193,6 +193,22 @@
 				BE4D92EB009B2033F172F15E /* Pods-FCMagazineTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		BF64E7B51F39C21800C5EB44 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BF64E7B61F39C25900C5EB44 /* Utility.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		BFDEAEC81F3889B600B75AAE /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				BFDEAEC91F3889E700B75AAE /* DropboxManager.swift */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,13 +354,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FCMagazine-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BB4B702057221940B910AA5B /* [CP] Embed Pods Frameworks */ = {
@@ -353,9 +372,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-FCMagazine/Pods-FCMagazine-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyDropbox/SwiftyDropbox.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDropbox.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -368,13 +392,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FCMagazineTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FC41AF89D9A57B50182C973C /* [CP] Copy Pods Resources */ = {
@@ -399,18 +426,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF64E7B71F39C25900C5EB44 /* Utility.swift in Sources */,
 				182DF4821E68016200A2AF85 /* DJKFlipperConstants.swift in Sources */,
 				182DF4801E68016200A2AF85 /* DJKAnimationLayer.swift in Sources */,
 				18B4662E1E655068007F5009 /* MainViewController.swift in Sources */,
 				182DF4811E68016200A2AF85 /* DJKArrayHelper.swift in Sources */,
 				18B466291E654F0F007F5009 /* ReaderViewController.swift in Sources */,
 				18B466261E654F03007F5009 /* AppDelegate.swift in Sources */,
-				18B466371E65627D007F5009 /* Section.swift in Sources */,
-				18B466391E6587A8007F5009 /* SectionHeaderView.swift in Sources */,
 				182DF4831E68016200A2AF85 /* DJKFlipperView.swift in Sources */,
+				BF64E7B91F39D59000C5EB44 /* MagazineCoverCell.swift in Sources */,
 				182DF4851E68016200A2AF85 /* DJKStaticView.swift in Sources */,
-				18FD1F611E6453BA00B999A9 /* Magazine.swift in Sources */,
-				18B466321E655B71007F5009 /* MagazineCoverCell.swift in Sources */,
+				BF64E7B41F3999BB00C5EB44 /* Magazine.swift in Sources */,
+				BFDEAECA1F3889E700B75AAE /* DropboxManager.swift in Sources */,
 				182DF4841E68016200A2AF85 /* DJKScreenShotExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

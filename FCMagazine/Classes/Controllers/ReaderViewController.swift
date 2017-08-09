@@ -13,6 +13,8 @@ class ReaderViewController: UIViewController, DJKFlipperDataSource, UIScrollView
     
     @IBOutlet weak var thumbnailScrollView: UIScrollView!
     
+    var deleteDelegate: MagazineDeleteDelegate?
+    
     var magazineItem: Magazine?
     var pageViews = [UIScrollView]()
     
@@ -21,6 +23,12 @@ class ReaderViewController: UIViewController, DJKFlipperDataSource, UIScrollView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.backgroundColor = UIColor.gray
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+        self.navigationItem.title = magazineItem?.name
+        let rightButtonItem = UIBarButtonItem.init(image: UIImage(named: "Icon Menu"), style: .plain, target: self, action: #selector(showMenu))
+        self.navigationItem.rightBarButtonItem = rightButtonItem
         
         self.loadPages()
         flipView.dataSource = self
@@ -43,12 +51,16 @@ class ReaderViewController: UIViewController, DJKFlipperDataSource, UIScrollView
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {self.updateFrames(to: size)})
-        //updateFrames(to: size)
-//        if UIDevice.current.orientation.isLandscape {
-//            print("Landscape")
-//        } else {
-//            print("Portrait")
-//        }
+    }
+    
+    func showMenu() {
+        Utility.showActionSheet(viewController: self, sourceView: nil, title: nil, message: nil, actionTitle: "Delete", handler: {_ in
+            if let magazine = self.magazineItem {
+                DropboxManager.getInstance().deleteMagazine(name: magazine.name)
+                self.deleteDelegate?.deleted(magazine: magazine)
+            }
+            self.navigationController?.popViewController(animated: true)
+        })
     }
     
     func loadPages() {
@@ -63,39 +75,39 @@ class ReaderViewController: UIViewController, DJKFlipperDataSource, UIScrollView
             var thumbnailWidth:CGFloat = 0
             var thumbnailHeight:CGFloat = 0
             
-            let dirPath = magazine.dirPath
-            for i in 1...magazine.pageCount {
-                let imagePath = dirPath + "/\(i)"
-                let image = UIImage(named: imagePath)
-                
-                let imageView = UIImageView(image: image)
-                imageView.frame = imageFrame
-                imageView.contentMode = .scaleAspectFit
-                
-                let scrollView = UIScrollView(frame: imageFrame)
-                scrollView.minimumZoomScale = 1;
-                scrollView.zoomScale = 1.01
-                scrollView.maximumZoomScale = 3
-                scrollView.bounces = true
-                scrollView.delegate = self
-                scrollView.showsVerticalScrollIndicator = false
-                scrollView.showsHorizontalScrollIndicator = false
-                scrollView.addSubview(imageView)
-                
-                pageViews.append(scrollView)
-                
-                let imageThumbnail = resizeImage(image: image!, newWidth: 50)
-                thumbnailWidth = (imageThumbnail?.size.width)!
-                thumbnailHeight = (imageThumbnail?.size.height)!
-                let imageViewThumbnail = UIImageView(image: imageThumbnail!)
-                imageViewThumbnail.tag = i
-                imageViewThumbnail.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(thumbnailTapped(tapGestureRecognizer:))))
-                imageViewThumbnail.isUserInteractionEnabled = true
-                imageViewThumbnail.frame = CGRect(x: thumbnailXOffset, y: 0, width: thumbnailWidth, height: thumbnailHeight)
-                imageViewThumbnail.contentMode = .scaleAspectFit
-                thumbnailScrollView.addSubview(imageViewThumbnail)
-                
-                thumbnailXOffset += thumbnailWidth * 1.1
+            if let fileUrls = magazine.fileUrls {
+                for i in 0..<fileUrls.count {
+                    let image = UIImage(contentsOfFile: fileUrls[i].path)
+                    
+                    let imageView = UIImageView(image: image)
+                    imageView.frame = imageFrame
+                    imageView.contentMode = .scaleAspectFit
+                    
+                    let scrollView = UIScrollView(frame: imageFrame)
+                    scrollView.minimumZoomScale = 1;
+                    scrollView.zoomScale = 1.01
+                    scrollView.maximumZoomScale = 3
+                    scrollView.bounces = true
+                    scrollView.delegate = self
+                    scrollView.showsVerticalScrollIndicator = false
+                    scrollView.showsHorizontalScrollIndicator = false
+                    scrollView.addSubview(imageView)
+                    
+                    pageViews.append(scrollView)
+                    
+                    let imageThumbnail = resizeImage(image: image!, newWidth: 50)
+                    thumbnailWidth = (imageThumbnail?.size.width)!
+                    thumbnailHeight = (imageThumbnail?.size.height)!
+                    let imageViewThumbnail = UIImageView(image: imageThumbnail!)
+                    imageViewThumbnail.tag = i + 1
+                    imageViewThumbnail.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(thumbnailTapped(tapGestureRecognizer:))))
+                    imageViewThumbnail.isUserInteractionEnabled = true
+                    imageViewThumbnail.frame = CGRect(x: thumbnailXOffset, y: 0, width: thumbnailWidth, height: thumbnailHeight)
+                    imageViewThumbnail.contentMode = .scaleAspectFit
+                    thumbnailScrollView.addSubview(imageViewThumbnail)
+                    
+                    thumbnailXOffset += thumbnailWidth * 1.1
+                }
             }
             flipView.layoutSubviews()
             thumbnailScrollView.contentSize = CGSize(width: thumbnailXOffset, height: thumbnailHeight)
@@ -165,7 +177,7 @@ class ReaderViewController: UIViewController, DJKFlipperDataSource, UIScrollView
     func resetThumbnailsTimer() {
         //print("resetTimer")
         thumbnailsTimer?.invalidate()
-        thumbnailsTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true, block: {_ in
+        thumbnailsTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: {_ in
             self.hideThumbnails()
         })
     }
@@ -198,5 +210,9 @@ class ReaderViewController: UIViewController, DJKFlipperDataSource, UIScrollView
         return scrollView.subviews[0]
     }
     
+}
+
+protocol MagazineDeleteDelegate {
+    func deleted(magazine: Magazine)
 }
 

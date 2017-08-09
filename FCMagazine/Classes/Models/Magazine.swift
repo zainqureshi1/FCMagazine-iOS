@@ -2,35 +2,30 @@
 //  Magazine.swift
 //  FCMagazine
 //
-//  Created by Zain on 2/27/17.
+//  Created by Zain on 8/8/17.
 //  Copyright © 2017 e2esp. All rights reserved.
 //
 
 import UIKit
 
-class Magazine: NSObject {
+class Magazine {
     
     var name: String
-    var cover: UIImage!
-    var dirPath: String
-    var pageCount: Int
+    var coverImage: UIImage!
+    var date: Date!
     
-    var filler: Bool
+    var fileUrls: [URL]?
     
-    init(_ name: String, withCover cover: UIImage, _ dirPath: String, andPageCount pageCount: Int) {
+    var downloading = false
+    var downloaded = false
+    
+    var totalPages = 0
+    var downloadedPages = 0
+    
+    init(_ name: String, _ coverImage: UIImage, _ date: Date) {
         self.name = name
-        self.cover = cover
-        self.dirPath = dirPath
-        self.pageCount = pageCount
-        self.filler = false
-    }
-    
-    init(isFiller filler: Bool) {
-        self.name = ""
-        self.cover = nil
-        self.dirPath = ""
-        self.pageCount = 0
-        self.filler = filler
+        self.coverImage = coverImage
+        self.date = date
     }
     
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8M5-DD-XMu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8M5-DD-XMu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,102 +18,77 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="qNx-oV-oyf">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="50" height="50"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="10" id="qNx-oV-oyf">
+                            <size key="itemSize" width="375" height="403"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" reuseIdentifier="LatestCoverCell" id="hN6-Yj-hnC" userLabel="Latest Cover View Cell" customClass="MagazineCoverCell" customModule="FCMagazine" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="375" height="180"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WlR-B3-37D">
-                                            <rect key="frame" x="10" y="10" width="355" height="140"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7y-oX-KZl">
-                                            <rect key="frame" x="178" y="80" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </view>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="WlR-B3-37D" secondAttribute="trailing" constant="10" id="2Yg-U6-Rjs"/>
-                                    <constraint firstItem="WlR-B3-37D" firstAttribute="leading" secondItem="hN6-Yj-hnC" secondAttribute="leading" constant="10" id="DVn-fM-KOx"/>
-                                    <constraint firstItem="WlR-B3-37D" firstAttribute="top" secondItem="hN6-Yj-hnC" secondAttribute="top" constant="10" id="GJR-Mb-5Ah"/>
-                                    <constraint firstItem="Z7y-oX-KZl" firstAttribute="centerY" secondItem="hN6-Yj-hnC" secondAttribute="centerY" id="GSQ-2X-Q7d"/>
-                                    <constraint firstAttribute="bottom" secondItem="WlR-B3-37D" secondAttribute="bottom" constant="30" id="UdB-PX-M6R"/>
-                                    <constraint firstItem="Z7y-oX-KZl" firstAttribute="centerX" secondItem="hN6-Yj-hnC" secondAttribute="centerX" id="bCH-ss-M3b"/>
-                                </constraints>
-                                <size key="customSize" width="375" height="180"/>
-                                <connections>
-                                    <outlet property="imageViewCover" destination="WlR-B3-37D" id="c0X-J1-gBf"/>
-                                    <outlet property="labelName" destination="Z7y-oX-KZl" id="NBa-Gu-tdu"/>
-                                </connections>
-                            </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" reuseIdentifier="MagazineCoverCell" id="REy-h9-zwh" userLabel="Magazine Cover View Cell" customClass="MagazineCoverCell" customModule="FCMagazine" customModuleProvider="target">
-                                <rect key="frame" x="113" y="230" width="150" height="180"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="20" y="0.0" width="335" height="400"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="150" height="180"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="335" height="400"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p4Z-NV-fKQ">
-                                            <rect key="frame" x="10" y="10" width="130" height="160"/>
+                                            <rect key="frame" x="10" y="10" width="315" height="354"/>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDd-E7-GPR">
-                                            <rect key="frame" x="10" y="170" width="130" height="0.0"/>
-                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.65000000000000002" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Magazine Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDd-E7-GPR">
+                                            <rect key="frame" x="10" y="366" width="145" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0U-e6-LAn" userLabel="Button Download">
+                                            <rect key="frame" x="224" y="366" width="101" height="24"/>
+                                            <inset key="imageEdgeInsets" minX="-5" minY="0.0" maxX="5" maxY="0.0"/>
+                                            <state key="normal" title="Download" image="Icon Download">
+                                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="downloadClicked:" destination="REy-h9-zwh" eventType="touchUpInside" id="CTC-0r-Uwd"/>
+                                            </connections>
+                                        </button>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hdk-Pp-JqQ" userLabel="Label Available">
+                                            <rect key="frame" x="244.5" y="366" width="80.5" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6SI-8n-wFM">
+                                            <rect key="frame" x="30" y="342" width="275" height="2"/>
+                                        </progressView>
                                     </subviews>
                                 </view>
                                 <constraints>
                                     <constraint firstItem="p4Z-NV-fKQ" firstAttribute="top" secondItem="REy-h9-zwh" secondAttribute="top" constant="10" id="1Lw-8h-XCZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Hdk-Pp-JqQ" secondAttribute="trailing" constant="10" id="295-l3-xkf"/>
                                     <constraint firstItem="SDd-E7-GPR" firstAttribute="leading" secondItem="REy-h9-zwh" secondAttribute="leading" constant="10" id="8Yd-6H-J9X"/>
+                                    <constraint firstItem="p4Z-NV-fKQ" firstAttribute="trailing" secondItem="6SI-8n-wFM" secondAttribute="trailing" constant="20" id="BSz-He-uTD"/>
                                     <constraint firstAttribute="bottom" secondItem="SDd-E7-GPR" secondAttribute="bottom" constant="10" id="DNH-CR-gMx"/>
-                                    <constraint firstItem="SDd-E7-GPR" firstAttribute="top" secondItem="p4Z-NV-fKQ" secondAttribute="bottom" id="Xu3-UM-6T2"/>
-                                    <constraint firstAttribute="trailing" secondItem="SDd-E7-GPR" secondAttribute="trailing" constant="10" id="llX-D6-vIX"/>
+                                    <constraint firstAttribute="trailing" secondItem="h0U-e6-LAn" secondAttribute="trailing" constant="10" id="Mlt-AV-rim"/>
+                                    <constraint firstItem="h0U-e6-LAn" firstAttribute="top" secondItem="p4Z-NV-fKQ" secondAttribute="bottom" constant="2" id="Psw-3G-87c"/>
+                                    <constraint firstItem="SDd-E7-GPR" firstAttribute="top" secondItem="p4Z-NV-fKQ" secondAttribute="bottom" constant="2" id="Xu3-UM-6T2"/>
+                                    <constraint firstItem="p4Z-NV-fKQ" firstAttribute="bottom" secondItem="6SI-8n-wFM" secondAttribute="bottom" constant="20" id="dc7-5Q-QlV"/>
+                                    <constraint firstItem="Hdk-Pp-JqQ" firstAttribute="top" secondItem="p4Z-NV-fKQ" secondAttribute="bottom" constant="2" id="eB2-F8-DfO"/>
+                                    <constraint firstAttribute="bottom" secondItem="Hdk-Pp-JqQ" secondAttribute="bottom" constant="10" id="s9V-Fl-DvY"/>
+                                    <constraint firstAttribute="bottom" secondItem="h0U-e6-LAn" secondAttribute="bottom" constant="10" id="uqT-Hw-vjQ"/>
                                     <constraint firstItem="p4Z-NV-fKQ" firstAttribute="leading" secondItem="REy-h9-zwh" secondAttribute="leading" constant="10" id="x2w-Nq-5lG"/>
+                                    <constraint firstItem="6SI-8n-wFM" firstAttribute="leading" secondItem="p4Z-NV-fKQ" secondAttribute="leading" constant="20" id="xXV-Bg-pew"/>
                                     <constraint firstAttribute="trailing" secondItem="p4Z-NV-fKQ" secondAttribute="trailing" constant="10" id="zkA-nk-5uS"/>
                                 </constraints>
-                                <size key="customSize" width="150" height="180"/>
+                                <size key="customSize" width="335" height="400"/>
                                 <connections>
+                                    <outlet property="buttonDownload" destination="h0U-e6-LAn" id="NJc-vM-qcD"/>
                                     <outlet property="imageViewCover" destination="p4Z-NV-fKQ" id="Hfu-SQ-DVk"/>
-                                    <outlet property="labelName" destination="SDd-E7-GPR" id="UJU-PM-JjN"/>
+                                    <outlet property="labelAvailable" destination="Hdk-Pp-JqQ" id="2gg-Y7-Z41"/>
+                                    <outlet property="labelName" destination="SDd-E7-GPR" id="eo1-vy-pdV"/>
+                                    <outlet property="progressView" destination="6SI-8n-wFM" id="2cS-cY-bOf"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
-                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SectionHeader" id="BEv-F2-mEd" customClass="SectionHeaderView" customModule="FCMagazine" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdw-3f-qB0">
-                                    <rect key="frame" x="8" y="8" width="359" height="34"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.14999999999999999" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstItem="cdw-3f-qB0" firstAttribute="leading" secondItem="BEv-F2-mEd" secondAttribute="leadingMargin" id="1N0-aU-lNb"/>
-                                <constraint firstAttribute="bottomMargin" secondItem="cdw-3f-qB0" secondAttribute="bottom" id="DB7-iQ-dQv"/>
-                                <constraint firstAttribute="trailingMargin" secondItem="cdw-3f-qB0" secondAttribute="trailing" id="UHe-ie-b44"/>
-                                <constraint firstItem="cdw-3f-qB0" firstAttribute="top" secondItem="BEv-F2-mEd" secondAttribute="topMargin" id="qcx-Ya-bB5"/>
-                            </constraints>
-                            <connections>
-                                <outlet property="labelHeader" destination="cdw-3f-qB0" id="WPZ-af-7Kj"/>
-                            </connections>
-                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="81F-qJ-9s6" id="Oec-EP-Te5"/>
                             <outlet property="delegate" destination="81F-qJ-9s6" id="Ya7-dl-UjT"/>
@@ -188,4 +163,7 @@
             <point key="canvasLocation" x="-474.39999999999998" y="200.14992503748127"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Icon Download" width="20" height="20"/>
+    </resources>
 </document>
