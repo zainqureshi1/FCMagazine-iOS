@@ -6,7 +6,6 @@
 //  Copyright © 2017 e2esp. All rights reserved.
 //
 
-import Foundation
 import Firebase
 
 class FirebaseManager {
@@ -20,33 +19,35 @@ class FirebaseManager {
         return instance
     }
     
-    var delegate: FirebaseSignInDelegate?
-    
     func configure() {
-        FIRApp.configure()
+        FirebaseApp.configure()
     }
     
-    func setDelegate(_ delegate: FirebaseSignInDelegate) {
-        self.delegate = delegate
+    func messagingDelegate(_ delegate: MessagingDelegate) {
+        Messaging.messaging().delegate = delegate
     }
     
-    func getClientId() -> String! {
-        return FIRApp.defaultApp()?.options.clientID
+    func subscribe() {
+        Messaging.messaging().subscribe(toTopic: "FCMagazine")
     }
     
-    var stateChangeListeners = [UIViewController : FIRAuthStateDidChangeListenerHandle]()
-    
-    func addStateChangeListener(forViewController viewController:UIViewController) {
-        let handler = FIRAuth.auth()?.addStateDidChangeListener() { (auth, user) in
-            if let user = user {
-                self.delegate?.firebaseSuccess(userId: user.uid, email: user.email!, displayName: user.displayName, photoUrl: user.photoURL)
-            }
-        }
-        stateChangeListeners[viewController] = handler
+    func unsubscribe() {
+        Messaging.messaging().unsubscribe(fromTopic: "FCMagazine")
     }
     
-    func removeStateChangeListener(forViewController viewController:UIViewController) {
-        FIRAuth.auth()?.removeStateDidChangeListener(stateChangeListeners[viewController]!)
+}
+
+extension AppDelegate : MessagingDelegate {
+    // [START refresh_token]
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(fcmToken)")
     }
-    
+    // [END refresh_token]
+    // [START ios_10_data_message]
+    // Receive data messages on iOS 10+ directly from FCM (bypassing APNs) when the app is in the foreground.
+    // To enable direct data messages, you can set Messaging.messaging().shouldEstablishDirectChannel to true.
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        print("Received data message: \(remoteMessage.appData)")
+    }
+    // [END ios_10_data_message]
 }

@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/apple/Documents/Zain/iOS Projects/FCMagazine/FC Magazine.xcodeproj">
+      location = "group:FC Magazine.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

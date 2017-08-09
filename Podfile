@@ -7,6 +7,8 @@ target 'FCMagazine' do
 
   # Pods for FCMagazine
   pod 'SwiftyDropbox'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 
   target 'FCMagazineTests' do
     inherit! :search_paths

@@ -25,6 +25,8 @@
 		BF64E7B41F3999BB00C5EB44 /* Magazine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF64E7B31F3999BB00C5EB44 /* Magazine.swift */; };
 		BF64E7B71F39C25900C5EB44 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF64E7B61F39C25900C5EB44 /* Utility.swift */; };
 		BF64E7B91F39D59000C5EB44 /* MagazineCoverCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF64E7B81F39D59000C5EB44 /* MagazineCoverCell.swift */; };
+		BF8116951F3AE23E00A76DC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF8116941F3AE23E00A76DC6 /* GoogleService-Info.plist */; };
+		BF8116971F3AE2D500A76DC6 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8116961F3AE2D500A76DC6 /* FirebaseManager.swift */; };
 		BFDEAECA1F3889E700B75AAE /* DropboxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEAEC91F3889E700B75AAE /* DropboxManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,8 @@
 		BF64E7B31F3999BB00C5EB44 /* Magazine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Magazine.swift; path = Classes/Models/Magazine.swift; sourceTree = "<group>"; };
 		BF64E7B61F39C25900C5EB44 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utility.swift; path = Classes/Utils/Utility.swift; sourceTree = "<group>"; };
 		BF64E7B81F39D59000C5EB44 /* MagazineCoverCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MagazineCoverCell.swift; path = Classes/Views/MagazineCoverCell.swift; sourceTree = "<group>"; };
+		BF8116941F3AE23E00A76DC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		BF8116961F3AE2D500A76DC6 /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FirebaseManager.swift; path = Classes/Managers/FirebaseManager.swift; sourceTree = "<group>"; };
 		BFDEAEC91F3889E700B75AAE /* DropboxManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DropboxManager.swift; path = Classes/Managers/DropboxManager.swift; sourceTree = "<group>"; };
 		FCF9BC2585CD48903DABB168 /* Pods_FCMagazineTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FCMagazineTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -171,6 +175,7 @@
 				18FD1F471E6409A400B999A9 /* Assets.xcassets */,
 				18FD1F491E6409A400B999A9 /* LaunchScreen.storyboard */,
 				18FD1F4C1E6409A400B999A9 /* Info.plist */,
+				BF8116941F3AE23E00A76DC6 /* GoogleService-Info.plist */,
 			);
 			path = FCMagazine;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 		BFDEAEC81F3889B600B75AAE /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				BF8116961F3AE2D500A76DC6 /* FirebaseManager.swift */,
 				BFDEAEC91F3889E700B75AAE /* DropboxManager.swift */,
 			);
 			name = Managers;
@@ -270,6 +276,11 @@
 						DevelopmentTeam = 8ATKJVTCY4;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					18FD1F501E6409A500B999A9 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -278,7 +289,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 18FD1F361E6409A400B999A9 /* Build configuration list for PBXProject "FCMagazine" */;
+			buildConfigurationList = 18FD1F361E6409A400B999A9 /* Build configuration list for PBXProject "FC Magazine" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -303,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18FD1F4B1E6409A400B999A9 /* LaunchScreen.storyboard in Resources */,
+				BF8116951F3AE23E00A76DC6 /* GoogleService-Info.plist in Resources */,
 				18FD1F481E6409A400B999A9 /* Assets.xcassets in Resources */,
 				18FD1F461E6409A400B999A9 /* Main.storyboard in Resources */,
 			);
@@ -374,12 +386,18 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-FCMagazine/Pods-FCMagazine-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyDropbox/SwiftyDropbox.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDropbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -428,6 +446,7 @@
 			files = (
 				BF64E7B71F39C25900C5EB44 /* Utility.swift in Sources */,
 				182DF4821E68016200A2AF85 /* DJKFlipperConstants.swift in Sources */,
+				BF8116971F3AE2D500A76DC6 /* FirebaseManager.swift in Sources */,
 				182DF4801E68016200A2AF85 /* DJKAnimationLayer.swift in Sources */,
 				18B4662E1E655068007F5009 /* MainViewController.swift in Sources */,
 				182DF4811E68016200A2AF85 /* DJKArrayHelper.swift in Sources */,
@@ -585,7 +604,7 @@
 				INFOPLIST_FILE = FCMagazine/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.e2esp.FCMagazine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.e2esp.FCMagazineSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -602,7 +621,7 @@
 				INFOPLIST_FILE = FCMagazine/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.e2esp.FCMagazine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.e2esp.FCMagazineSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -641,7 +660,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		18FD1F361E6409A400B999A9 /* Build configuration list for PBXProject "FCMagazine" */ = {
+		18FD1F361E6409A400B999A9 /* Build configuration list for PBXProject "FC Magazine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18FD1F581E6409A500B999A9 /* Debug */,

@@ -39,8 +39,18 @@ class MainViewController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     func showMenu() {
-        Utility.showActionSheet(viewController: self, sourceView: nil, title: nil, message: nil, actionTitle: "Subscribe", handler: {_ in
-            
+        let subscribed = UserDefaults.standard.bool(forKey: "Subscription")
+        Utility.showActionSheet(viewController: self, sourceView: nil, title: nil, message: nil, actionTitle: subscribed ? "Unsubscribe" : "Subscribe", handler: {_ in
+            var alert = ""
+            if subscribed {
+                FirebaseManager.getInstance().unsubscribe()
+                alert = "You have unsubscribed from magazine updates. Magazine will no longer auto download when published.\nPlease subscribe again to get best experience."
+            } else {
+                FirebaseManager.getInstance().subscribe()
+                alert = "Thank you for subscribing. We will download future issues for you as soon as they are published."
+            }
+            Utility.showAlert(viewController: self, title: "", message: alert)
+            UserDefaults.standard.set(!subscribed, forKey: "Subscription")
         })
     }
     
